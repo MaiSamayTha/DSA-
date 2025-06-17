@@ -1,0 +1,51 @@
+import java.util.Stack;
+
+public class sortStack {
+
+    // Function to insert an element into sorted stack
+    static void sortedInsert(Stack<Integer> stack, int element) {
+        // Base case: if stack is empty or element > top
+        if (stack.isEmpty() || element > stack.peek()) {
+            stack.push(element);
+            return;
+        }
+
+        // Otherwise, pop top and recur
+        int top = stack.pop();
+        sortedInsert(stack, element);
+
+        // Push back the top element
+        stack.push(top);
+    }
+
+    // Function to sort the stack
+    static void sortStack(Stack<Integer> stack) {
+        if (!stack.isEmpty()) {
+            // Pop top element
+            int top = stack.pop();
+
+            // Sort remaining stack
+            sortStack(stack);
+
+            // Insert top back in sorted order
+            sortedInsert(stack, top);
+        }
+    }
+
+    public static void main(String[] args) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(11);
+        stack.push(2);
+        stack.push(32);
+        stack.push(3);
+        stack.push(41);
+
+        // Call sort
+        sortStack(stack);
+
+        // Print sorted stack (top to bottom)
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop() + " ");
+        }
+    }
+}
